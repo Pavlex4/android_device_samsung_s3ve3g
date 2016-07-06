@@ -12,6 +12,7 @@ TARGET_CPU_VARIANT := cortex-a7
 TARGET_BOOTLOADER_BOARD_NAME := MSM8226
 TARGET_NO_BOOTLOADER := true
 # Kernel
+BOARD_CUSTOM_BOOTIMG_MK := device/samsung/s3ve3g/mkbootimg.mk
 TARGET_PREBUILT_KERNEL := device/samsung/s3ve3g/kernel
 BOARD_KERNEL_CMDLINE := console=null androidboot.console=null androidboot.hardware=qcom user_debug=31 msm_rtb.filter=0x37 androidboot.selinux=permissive
 BOARD_KERNEL_BASE := 0x00000000
@@ -31,6 +32,7 @@ TARGET_USERIMAGES_USE_F2FS := true
 BOARD_USE_CUSTOM_RECOVERY_FONT := \"roboto_15x24.h\"
 BOARD_SUPPRESS_EMMC_WIPE := true
 # TWRP
+TARGET_RECOVERY_IS_MULTIROM := true
 DEVICE_RESOLUTION := 720x1280
 RECOVERY_GRAPHICS_USE_LINELENGTH := true
 RECOVERY_SDCARD_ON_DATA := true
@@ -53,4 +55,17 @@ TW_BRIGHTNESS_PATH := /sys/class/leds/lcd-backlight/brightness
 TARGET_USE_CUSTOM_LUN_FILE_PATH := /sys/devices/platform/msm_hsusb/gadget/lun0/file
 # Time services
 BOARD_USES_QC_TIME_SERVICES := true
-
+# Multirom
+HAVE_SELINUX := true
+MR_INPUT_TYPE := type_b
+MR_INIT_DEVICES := device/samsung/s3ve3g/mr_init_devices.c
+MR_DPI := hdpi
+MR_DPI_FONT := 216
+MR_FSTAB := $(LOCAL_PATH)/recovery/twrp.fstab
+# End of first RAM region is 0x083fffff, so we set it to for example 0x06500000
+MR_KEXEC_MEM_MIN := 0x06500000
+MR_KEXEC_DTB := true
+MR_USE_QCOM_OVERLAY := true
+MR_QCOM_OVERLAY_HEADER := "device/samsung/s3ve3g/multirom/mr_qcom_overlay.h
+MR_QCOM_OVERLAY_CUSTOM_PIXEL_FORMAT := MDP_RGBX_8888
+# MR_INFOS := d$(LOCAL_PATH)/mrom_infos
